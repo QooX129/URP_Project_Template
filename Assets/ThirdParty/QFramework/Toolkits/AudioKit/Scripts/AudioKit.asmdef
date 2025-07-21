@@ -1,0 +1,17 @@
+{
+    "name": "AudioKit",
+    "rootNamespace": "",
+    "references": [
+        "QFramework.CoreKit",
+        "QFramework"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
