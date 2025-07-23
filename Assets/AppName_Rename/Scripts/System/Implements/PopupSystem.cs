@@ -17,16 +17,12 @@ namespace AppName_Rename.UI
             base.OnInit();
             _table = new PopupUITable();
 
-            // this.RegisterEvent<IOnUIRootSetEvent>(arg =>
-            //     {
-            //         if (arg.ParentTransform == ParentTransform.Gameplay)
-            //             GamePlayManagerRoot = arg.PopupRootTransform;
-            //         else
-            //             PersistentControllerRoot = arg.PopupRootTransform;
-            //     })
-            //     .AddToUnregisterList(this);
+            this.RegisterEvent<IOnUIRootSetEvent>(arg =>
+                {
+                        PersistentControllerRoot = arg.PopupRootTransform;
+                })
+                .AddToUnregisterList(this);
 
-            // this.RegisterEvent<ILoadMenuSceneEvent>(_ => CloseAllUI(true)).AddToUnregisterList(this);
             // this.RegisterEvent<ILoadSceneEvent>(args =>
             // {
             //     var needFullClear = args.Scene.sceneType is GameSceneSO.SceneType.Level or GameSceneSO.SceneType.Game;
@@ -58,11 +54,9 @@ namespace AppName_Rename.UI
             else
             {
                 popup.UpdateAndShow(searchKeys.UIData);
-                //PanelUIStack.Push(_currentPanel);
 
                 onLoaded?.Invoke(popup);
             }
-
             _currentPopup = popup;
         }
 
@@ -77,9 +71,7 @@ namespace AppName_Rename.UI
             else
             {
                 popup.UpdateAndShow(searchKeys.UIData);
-                //PanelUIStack.Push(_currentPanel);
             }
-
             _currentPopup = popup;
             return popup;
         }

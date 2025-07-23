@@ -21,16 +21,12 @@ namespace AppName_Rename.UI
 
             _table = new PanelUITable();
 
-            // this.RegisterEvent<IOnUIRootSetEvent>(arg =>
-            //     {
-            //         if (arg.ParentTransform == ParentTransform.Gameplay)
-            //             GamePlayManagerRoot = arg.PanelRootTransform;
-            //         else
-            //             PersistentControllerRoot = arg.PanelRootTransform;
-            //     })
-            //     .AddToUnregisterList(this);
+            this.RegisterEvent<IOnUIRootSetEvent>(arg =>
+                {
+                    PersistentControllerRoot = arg.PanelRootTransform;
+                })
+                .AddToUnregisterList(this);
 
-            // this.RegisterEvent<ILoadMenuSceneEvent>(_ => CloseAllUI(true)).AddToUnregisterList(this);
             // this.RegisterEvent<ILoadSceneEvent>(args =>
             // {
             //     var needFullClear = args.Scene.sceneType is GameSceneSO.SceneType.Level or GameSceneSO.SceneType.Game;
@@ -67,10 +63,6 @@ namespace AppName_Rename.UI
             PanelUIStack.Push(_currentPanel);
             _currentPanel = panel;
 
-            // this.SendEvent(_currentPanel is MainPanel
-            //     ? new ChangeInputEvent(InputType.Level, isActive: true)
-            //     : new ChangeInputEvent(InputType.Level, isActive: false));
-
             onLoaded?.Invoke(panel);
         }
 
@@ -85,12 +77,7 @@ namespace AppName_Rename.UI
                 else
                     PanelUIStack.Push(_currentPanel);
             }
-
             _currentPanel = panel;
-
-            // this.SendEvent(_currentPanel is MainPanel
-            //     ? new ChangeInputEvent(InputType.Level, isActive: true)
-            //     : new ChangeInputEvent(InputType.Level, isActive: false));
 
             return panel;
         }
@@ -99,13 +86,8 @@ namespace AppName_Rename.UI
         {
             var panel = _table.GetPanelsBySearchKeys(searchKeys).FirstOrDefault();
 
-            // this.SendEvent(new ChangeInputEvent(InputType.Level, isActive: false));
             panel?.UpdateAndShow(searchKeys.UIData);
             _currentPanel = panel;
-
-            // this.SendEvent(_currentPanel is MainPanel
-            //     ? new ChangeInputEvent(InputType.Level, isActive: true)
-            //     : new ChangeInputEvent(InputType.Level, isActive: false));
         }
 
         public override void HideUI(PanelUISearchKeys searchKeys)
@@ -114,8 +96,6 @@ namespace AppName_Rename.UI
 
             panel?.Hide();
             _currentPanel = null;
-
-            // this.SendEvent(new ChangeInputEvent(InputType.Level, isActive: true));
         }
 
         public override void HideAllUI()
@@ -157,8 +137,6 @@ namespace AppName_Rename.UI
                     _table.Remove(panel);
                     RecyclePanel(panel, true);
                 }
-
-                //_table.Clear();
                 return;
             }
 

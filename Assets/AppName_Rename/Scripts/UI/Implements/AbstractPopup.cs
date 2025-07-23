@@ -134,7 +134,7 @@ namespace AppName_Rename.UI
             // throw new NullReferenceException($"[{GetType()}] PrimaryButton is not set");
 
             PrimaryButton.GetComponentInChildren<Localize>().SetTerm(string.IsNullOrEmpty(buttonText)
-                ? ScriptTerms.popup_btn_primary_default
+                ? "OK"
                 : buttonText);
 
             PrimaryButton.onClick.RemoveAllListeners();
