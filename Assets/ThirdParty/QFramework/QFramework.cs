@@ -213,7 +213,7 @@ namespace QFramework
     #region Controller
 
     public interface IController : IBelongToArchitecture, ICanSendCommand, ICanGetSystem, ICanGetModel,
-        ICanRegisterEvent, ICanSendQuery, ICanGetUtility
+        ICanRegisterEvent, ICanSendQuery, ICanGetUtility, ICanSendEvent
     {
     }
 
