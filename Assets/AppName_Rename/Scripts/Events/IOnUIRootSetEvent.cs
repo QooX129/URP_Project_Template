@@ -9,9 +9,14 @@ namespace AppName_Rename
         Transform PopupRootTransform { get; }
     }
 
-    public record OnUIRootSetEvent(Transform panelRootTransform, Transform popupRootTransform) : IOnUIRootSetEvent
+    public record OnUIRootSetEvent : IOnUIRootSetEvent
     {
         public Transform PanelRootTransform { get; }
         public Transform PopupRootTransform { get; }
+        public OnUIRootSetEvent(Transform panelRootTransform, Transform popupRootTransform)
+        {
+            PanelRootTransform = panelRootTransform;
+            PopupRootTransform = popupRootTransform;
+        }
     }
 }
