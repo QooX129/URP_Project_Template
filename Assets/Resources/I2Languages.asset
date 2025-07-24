@@ -17,14 +17,12 @@ MonoBehaviour:
     UserAgreesToHaveItInsideThePluginsFolder: 0
     GoogleLiveSyncIsUptoDate: 1
     mTerms:
-    - Term: '-'
-      TermType: 9
+    - Term: text_testKey
+      TermType: 0
       Description: 
       Languages:
-      - "Are you sure you want to block {[ USERNAME ]}? They won\u2019t know you
-        blocked them. And you won\u2019t receive any postcards from them anymore."
-      - "\u4F60\u78BA\u5B9A\u8981\u5C01\u9396 {[ USERNAME ]} \u55CE\uFF1F \u4ED6\u5011\u4E0D\u6703\u77E5\u9053\u4F60\u5C01\u9396\u4E86\u4ED6\u5011\u3002
-        \u4F60\u5C07\u4E0D\u518D\u6536\u5230\u4ED6\u5011\u5BC4\u4F86\u7684\u4EFB\u4F55\u660E\u4FE1\u7247\u3002"
+      - test
+      - "\u6E2C\u8A66"
       Flags: 0000
       Languages_Touch: []
     CaseInsensitiveTerms: 0
@@ -39,9 +37,9 @@ MonoBehaviour:
       Flags: 0
     IgnoreDeviceLanguage: 0
     _AllowUnloadingLanguages: 0
-    Google_WebServiceURL: https://script.google.com/macros/s/AKfycbzsB7opL15bPDVphJN6uwbf3WnUrF-FiQSQsND7MZt9Ojt-QO_KQcnzZYfc_MgyNI5ryg/exec
+    Google_WebServiceURL: 
     Google_SpreadsheetKey: 
-    Google_SpreadsheetName: I2Loc Enspiren Localization
+    Google_SpreadsheetName: 
     Google_LastUpdatedVersion: 1744683574780
     Google_Password: 
     GoogleUpdateFrequency: 1
@@ -49,8 +47,8 @@ MonoBehaviour:
     GoogleUpdateSynchronization: 1
     GoogleUpdateDelay: 0
     Assets: []
-    Spreadsheet_LocalFileName: 
+    Spreadsheet_LocalFileName: AppName_Rename/Objects/i2LanguageTerm.csv
     Spreadsheet_LocalCSVSeparator: ','
-    Spreadsheet_LocalCSVEncoding: utf-8
+    Spreadsheet_LocalCSVEncoding: big5
     Spreadsheet_SpecializationAsRows: 1
     Spreadsheet_SortRows: 1
