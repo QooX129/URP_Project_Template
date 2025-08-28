@@ -19,7 +19,7 @@ namespace AppName_Rename.UI
 
         public List<GameObject> references;
 
-        protected virtual float FadeDuration => 0.2f;
+        protected virtual float FadeDuration => 0.3f;
         protected IUIData UIData;
         protected Tween Tween;
         // protected ContextUITable ScrollViewContextTable;
@@ -60,13 +60,19 @@ namespace AppName_Rename.UI
             //gameObject.SetActive(false);
         }
 
-        void IUIBase.Close(bool destroy)
+        private async UniTask HideTween()
+        {
+            State = PanelState.Hide;
+            await OnPanelHide();
+        }
+
+        async void IUIBase.Close(bool destroy)
         {
             Info.UIData = UIData;
             _onClose?.Invoke();
             _onClose = null;
 
-            Hide();
+            await HideTween();
             State = PanelState.Closed;
             OnPanelClose();
 
@@ -142,7 +148,7 @@ namespace AppName_Rename.UI
 
         protected virtual void BackToPreviousPanel()
         {
-            AudioKit.PlaySound(AssetAddress.SfxBack);
+            // AudioKit.PlaySound(AssetAddress.SfxBack);
             this.SendCommand(new BackToPreviousPanelCommand(this));
         }
 
@@ -238,7 +244,7 @@ namespace AppName_Rename.UI
 
         public IArchitecture GetArchitecture()
         {
-            return AppArchitecture_Rename.Interface;
+            return AppArchitecture.Interface;
         }
     }
 }

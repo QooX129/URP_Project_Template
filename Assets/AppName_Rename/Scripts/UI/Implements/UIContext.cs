@@ -113,7 +113,7 @@ namespace AppName_Rename.UI
 
         public IArchitecture GetArchitecture()
         {
-            return AppArchitecture_Rename.Interface;
+            return AppArchitecture.Interface;
         }
     }
 }

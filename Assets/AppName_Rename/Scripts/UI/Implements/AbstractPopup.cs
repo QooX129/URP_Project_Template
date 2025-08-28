@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 namespace AppName_Rename.UI
 {
@@ -20,7 +21,7 @@ namespace AppName_Rename.UI
         public PopupInfo Info { get; set; }
         public PopupState State { get; set; }
 
-        protected virtual float FadeDuration => 0.1f;
+        protected virtual float FadeDuration => 0.2f;
 
         [SerializeField] protected List<GameObject> references;
 
@@ -65,16 +66,12 @@ namespace AppName_Rename.UI
             //     Debug.LogError(
             //         $"[{GetType()}]: UI Data is not of type {nameof(PopupUIData)}");
             // }
-
-            State = PopupState.Showing;
-            gameObject.SetActive(true);
-            OnPopupShow(uiData);
+            OnPopupShow(uiData).Forget();
         }
 
         public void Show()
         {
-            State = PopupState.Showing;
-            OnPopupShow();
+            OnPopupShow().Forget();
         }
 
         public void Hide()
@@ -85,17 +82,22 @@ namespace AppName_Rename.UI
                 SecondaryButton.onClick.RemoveAllListeners();
 
             State = PopupState.Hide;
-            OnPopupHide();
+            OnPopupHide().Forget();
             gameObject.SetActive(false);
         }
+        private async UniTask HideTween()
+        {
+            State = PopupState.Hide;
+            await OnPopupHide();
+        }
 
-        void IUIBase.Close(bool destroy)
+        async void IUIBase.Close(bool destroy)
         {
             Info.UIData = UIData;
             _onClose?.Invoke();
             _onClose = null;
 
-            Hide();
+            await HideTween();
             State = PopupState.Closed;
             OnPopupClose();
 
@@ -108,7 +110,43 @@ namespace AppName_Rename.UI
         protected virtual void CloseSelf()
         {
             this.SendCommand(new ClosePopupCommand(this));
-            AudioKit.PlaySound(AssetAddress.SfxBack);
+            // AudioKit.PlaySound(AssetAddress.SfxBack);
+        }
+
+        protected virtual async UniTask FadeIn(float duration)
+        {
+            if (!CanvasGroup)
+            {
+                Debug.LogWarning("CanvasGroup is null!");
+                return;
+            }
+
+            CanvasGroup.blocksRaycasts = false;
+            Tween = CanvasGroup.DOFade(1f, duration)
+                .SetEase(Ease.OutSine)
+                .SetLink(gameObject, LinkBehaviour.KillOnDestroy);
+
+            await Tween;
+
+            CanvasGroup.blocksRaycasts = true;
+        }
+
+        protected virtual async UniTask FadeOut(float duration)
+        {
+            if (!CanvasGroup)
+            {
+                Debug.LogWarning("CanvasGroup is null!");
+                return;
+            }
+
+            CanvasGroup.blocksRaycasts = false;
+            Tween = CanvasGroup.DOFade(0f, duration)
+                .SetEase(Ease.OutSine)
+                .SetLink(gameObject, LinkBehaviour.KillOnDestroy);
+
+            await Tween;
+
+            gameObject.SetActive(false);
         }
 
         protected virtual void SetSubject(string subject)
@@ -126,21 +164,21 @@ namespace AppName_Rename.UI
             var text = SubjectLabel.GetComponent<TextMeshProUGUI>();
             text.text = Regex.Unescape(text.text);
         }
-
+        //Called after the popup is initialized and before it is shown
         protected virtual void SetPrimaryButton(string buttonText, Action onClick = null)
         {
             if (!PrimaryButton)
                 return;
             // throw new NullReferenceException($"[{GetType()}] PrimaryButton is not set");
 
-            PrimaryButton.GetComponentInChildren<Localize>().SetTerm(string.IsNullOrEmpty(buttonText)
-                ? "OK"
-                : buttonText);
+            if (buttonText != null)
+                PrimaryButton.GetComponentInChildren<Localize>().SetTerm(buttonText);
 
             PrimaryButton.onClick.RemoveAllListeners();
             PrimaryButton.onClick.AddListener(() =>
             {
                 onClick?.Invoke();
+                CloseSelf();
             });
         }
 
@@ -150,20 +188,31 @@ namespace AppName_Rename.UI
                 return;
             //throw new NullReferenceException($"[{GetType()}] SecondaryButton is not set");
 
-            if (string.IsNullOrEmpty(buttonText))
-            {
-                SecondaryButton.gameObject.SetActive(false);
-                return;
-            }
-
-            SecondaryButton.GetComponentInChildren<Localize>().SetTerm(buttonText);
+            if (buttonText != null)
+                SecondaryButton.GetComponentInChildren<Localize>().SetTerm(buttonText);
             SecondaryButton.onClick.RemoveAllListeners();
             SecondaryButton.onClick.AddListener(onClick == null ? CloseSelf : new UnityAction(onClick));
         }
 
         protected abstract void OnPopupInit(IUIData uiData = null);
-        protected abstract void OnPopupShow(IUIData uiData = null);
-        protected abstract void OnPopupHide();
+        protected virtual async UniTask OnPopupShow(IUIData uiData = null)
+        {
+            if (State != PopupState.Showing)
+            {
+                CanvasGroup.alpha = 0f;
+                gameObject.SetActive(true);
+
+                await FadeIn(FadeDuration);
+            }
+
+            gameObject.SetActive(true);
+            State = PopupState.Showing;
+        }
+        protected virtual async UniTask OnPopupHide()
+        {
+            await FadeOut(FadeDuration);
+            State = PopupState.Hide;
+        }
         protected abstract void OnPopupClose();
 
         protected GameObject GetReference(string objName)
@@ -188,7 +237,7 @@ namespace AppName_Rename.UI
 
         public IArchitecture GetArchitecture()
         {
-            return AppArchitecture_Rename.Interface;
+            return AppArchitecture.Interface;
         }
     }
 }

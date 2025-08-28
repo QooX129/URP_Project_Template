@@ -5,7 +5,7 @@ using QFramework;
 
 namespace AppName_Rename.Core
 {
-    public class AppArchitecture_Rename : Architecture<AppArchitecture_Rename>
+    public class AppArchitecture : Architecture<AppArchitecture>
     {
         protected override void Init()
         {

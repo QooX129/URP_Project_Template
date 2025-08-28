@@ -5,7 +5,7 @@ using AppName_Rename.Core;
 using QFramework;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour,IController
+public class UIManager : MonoBehaviour, IController
 {
     void Start()
     {
@@ -23,6 +23,6 @@ public class UIManager : MonoBehaviour,IController
     }
     public IArchitecture GetArchitecture()
     {
-        return AppArchitecture_Rename.Interface;
+        return AppArchitecture.Interface;
     }
 }

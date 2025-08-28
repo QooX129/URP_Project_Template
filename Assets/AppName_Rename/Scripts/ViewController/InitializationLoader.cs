@@ -13,6 +13,6 @@ public class InitializationLoader : MonoBehaviour, IController
     }
     public IArchitecture GetArchitecture()
     {
-        return AppArchitecture_Rename.Interface;
+        return AppArchitecture.Interface;
     }
 }

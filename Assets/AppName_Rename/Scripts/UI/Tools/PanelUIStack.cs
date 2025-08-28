@@ -53,7 +53,7 @@ namespace AppName_Rename
 
         public IArchitecture GetArchitecture()
         {
-            return AppArchitecture_Rename.Interface;
+            return AppArchitecture.Interface;
         }
     }
 }
