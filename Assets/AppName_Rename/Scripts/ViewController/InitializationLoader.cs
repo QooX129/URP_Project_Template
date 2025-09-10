@@ -2,17 +2,22 @@ using AppName_Rename.Core;
 using QFramework;
 using UnityEngine;
 
-public class InitializationLoader : MonoBehaviour, IController
+namespace AppName_Rename
 {
-    [SerializeField] SceneLoader _sceneLoader;
+    public class InitializationLoader : MonoBehaviour, IController
+    {
+        [SerializeField] SceneLoader _sceneLoader;
 
-    void Start()
-    {
-        _sceneLoader.OnInit();
-        DestroyImmediate(gameObject);
-    }
-    public IArchitecture GetArchitecture()
-    {
-        return AppArchitecture.Interface;
+        void Start()
+        {
+            AudioController.Instance.OnSingletonInit();
+
+            _sceneLoader.OnInit();
+            DestroyImmediate(gameObject);
+        }
+        public IArchitecture GetArchitecture()
+        {
+            return AppArchitecture.Interface;
+        }
     }
 }
