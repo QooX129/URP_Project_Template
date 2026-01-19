@@ -16,6 +16,7 @@ namespace AppName_Rename.Core
             RegisterSystem<IAssetSystem>(new AssetSystem());
             RegisterSystem<IPanelSystem>(new PanelSystem());
             RegisterSystem<IPopupSystem>(new PopupSystem());
+            RegisterSystem<ILocalizationUpdateSystem>(new LocalizationUpdateSystem());
 
             //Utility
         }
