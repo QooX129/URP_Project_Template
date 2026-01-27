@@ -6,21 +6,21 @@ namespace AppName_Rename
 {
     public static class AssetAddress
     {
-        public const string FLoadingScreen = "Assets/MindverseApp/UI/Prefabs/P_LoadingScreenPanel_Full.prefab";
-        public const string SLoadingScreen = "Assets/MindverseApp/UI/Prefabs/P_LoadingScreenPanel_Simple.prefab";
-        public const string Overlay = "Assets/MindverseApp/UI/Prefabs/P_Overlay.prefab";
+        public const string FLoadingScreen = "Assets/AppName_Rename/UI/Prefabs/P_LoadingScreenPanel_Full.prefab";
+        public const string SLoadingScreen = "Assets/AppName_Rename/UI/Prefabs/P_LoadingScreenPanel_Simple.prefab";
+        public const string Overlay = "Assets/AppName_Rename/UI/Prefabs/P_Overlay.prefab";
 
         #region Panels
-        //Template: public const string MainMenuPanel = "Assets/MindverseApp/UI/Prefabs/P_MainMenuPanel.prefab";
+        //Template: public const string MainMenuPanel = "Assets/AppName_Rename/UI/Prefabs/P_MainMenuPanel.prefab";
         #endregion
 
         #region Popups
-        //Template: public const string PurchasePopup = "Assets/MindverseApp/UI/Prefabs/P_PurchasePopup.prefab";
+        //Template: public const string PurchasePopup = "Assets/AppName_Rename/UI/Prefabs/P_PurchasePopup.prefab";
         #endregion
 
         #region Audio Assets
-        //Template: public const string Bgm1 = "Assets/MindverseApp/Audio/bgm/Bgm_1.mp3";
-        public const string SfxBack = "Assets/MindverseApp/Audio/sfx/(filename).mp3";
+        //Template: public const string Bgm1 = "Assets/AppName_Rename/Audio/bgm/Bgm_1.mp3";
+        public const string SfxBack = "Assets/AppName_Rename/Audio/sfx/(filename).mp3";
         #endregion
     }
 
